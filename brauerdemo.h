@@ -2,6 +2,8 @@
 #define BRAUERDEMO_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BrauerDemo; }
@@ -15,7 +17,10 @@ public:
     BrauerDemo(QWidget *parent = nullptr);
     ~BrauerDemo();
 
+
 private:
     Ui::BrauerDemo *ui;
+    void drawCircle(int x, int y, int r);
+
 };
 #endif // BRAUERDEMO_H
