@@ -13,12 +13,8 @@ BrauerDemo::BrauerDemo(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui->graphView->setScene(scene);
 
-
     outlinePen.setWidth(2);
 
-    scene->addRect(100, 0, 80, 100, outlinePen, Qt::blue);
-
-    drawCircle(100, 100, 40);
 }
 
 BrauerDemo::~BrauerDemo()
@@ -26,8 +22,24 @@ BrauerDemo::~BrauerDemo()
     delete ui;
 }
 
+/**
+ * @brief BrauerDemo::drawCircle Draws a circle
+ * @param x horizontal offset (px)
+ * @param y vertical offset (px)
+ * @param r radius (px)
+ */
 void BrauerDemo::drawCircle(int x, int y, int r)
 {
     scene->addEllipse(x, y, r, r, outlinePen, Qt::green);
+}
+
+void BrauerDemo::drawCassOvals()
+{
+
+}
+
+double real_root(double t, double a, double K)
+{
+    return 0.0;
 }
 
