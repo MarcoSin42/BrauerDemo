@@ -6,5 +6,5 @@ using namespace arma;
 #define MATH_UTILS_H
 
 
-vector<double> get_roots(vector<double>);
+cx_vec get_roots(vector<double>);
 #endif // MATH_UTILS_H
