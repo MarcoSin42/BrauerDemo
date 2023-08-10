@@ -1,5 +1,6 @@
 #include "brauerdemo.h"
 #include "./ui_brauerdemo.h"
+#include "math_utils.h"
 
 QGraphicsScene *scene;
 QPen outlinePen(Qt::black);
@@ -14,6 +15,8 @@ BrauerDemo::BrauerDemo(QWidget *parent)
     ui->graphView->setScene(scene);
 
     outlinePen.setWidth(2);
+
+    drawCircle(100,100, 40);
 
 }
 
