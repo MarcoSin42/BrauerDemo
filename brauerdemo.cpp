@@ -41,8 +41,4 @@ void BrauerDemo::drawCassOvals()
 
 }
 
-double real_root(double t, double a, double K)
-{
-    return 0.0;
-}
 
