@@ -24,5 +24,9 @@ private:
     Ui::BrauerDemo *ui;
     void drawCircle(int x, int y, int r);
     void drawCassOvals();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 };
 #endif // BRAUERDEMO_H
