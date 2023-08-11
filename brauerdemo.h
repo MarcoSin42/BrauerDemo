@@ -6,6 +6,9 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QResizeEvent>
+#include <QDebug>
+#include <QPoint>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BrauerDemo; }
@@ -19,14 +22,22 @@ public:
     BrauerDemo(QWidget *parent = nullptr);
     ~BrauerDemo();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+    //void mousePressEvent(QMouseEvent *event) override;
 
 private:
     Ui::BrauerDemo *ui;
+
+    QGraphicsScene *scene;
+    QPen *outlinePen;
+
+    int w, h, unit;
+
     void drawCircle(int x, int y, int r);
     void drawCassOvals();
-<<<<<<< HEAD
-=======
+    void drawAxis();
+    void update();
 
->>>>>>> origin/main
 };
 #endif // BRAUERDEMO_H

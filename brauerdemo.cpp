@@ -2,21 +2,29 @@
 #include "./ui_brauerdemo.h"
 #include "math_utils.h"
 
-QGraphicsScene *scene;
-QPen outlinePen(Qt::black);
+const int CORNER_OFFSET = 50;
 
 BrauerDemo::BrauerDemo(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::BrauerDemo)
 {
     ui->setupUi(this);
-
     scene = new QGraphicsScene(this);
+    outlinePen = new QPen(Qt::black);
+
+    // This part below drove me insane trying to get this behaviour.
+    ui->graphView->setAlignment(Qt::AlignTop|Qt::AlignLeft);
     ui->graphView->setScene(scene);
 
-    outlinePen.setWidth(2);
+    w = ui->graphView->width();
+    h = ui->graphView->height();
 
-    drawCircle(100,100, 40);
+    qDebug("w: %d | h: %d", w, h);
+
+    outlinePen->setWidth(2);
+
+    //drawCircle(100,100, 40);
+    //drawAxis();
 
 }
 
@@ -33,12 +41,55 @@ BrauerDemo::~BrauerDemo()
  */
 void BrauerDemo::drawCircle(int x, int y, int r)
 {
-    scene->addEllipse(x, y, r, r, outlinePen, Qt::green);
+    // qDebug("w: %d | h: %d asdas", w, h);
+    scene->addEllipse(x, y, r, r, *outlinePen, Qt::green);
+}
+
+/**
+ * @brief BrauerDemo::update Redraws the entire scene, usually is called when window is resized
+ */
+void BrauerDemo::update()
+{
+    scene->clear();
+    ui->graphView->update();
+
+    scene->setSceneRect(ui->graphView->sceneRect());
+    w = ui->graphView->width();
+    h = ui->graphView->height();
+    qDebug("I've been resized! w: %d | h: %d asdas", w, h);
+    //drawCircle(0, 0, 50);
+    drawAxis();
+}
+
+void BrauerDemo::resizeEvent(QResizeEvent *event)
+{
+    update();
+}
+
+/**
+ * @brief BrauerDemo::drawAxis Draws the axis, is called whenever the scene is redrawn, ex resized window
+ */
+void BrauerDemo::drawAxis()
+{
+    vec y_axis = linspace(CORNER_OFFSET,h,10);
+    vec x_axis = linspace(CORNER_OFFSET,w,10);
+
+    scene->addLine(0, CORNER_OFFSET, w, CORNER_OFFSET, *outlinePen);
+    scene->addLine(CORNER_OFFSET, 0, CORNER_OFFSET, h, *outlinePen);
+
+    for (auto x: x_axis)
+    {
+        scene->addLine(x, CORNER_OFFSET/2, x, 3*CORNER_OFFSET/2, *outlinePen);
+    }
+
+    for(auto y: y_axis)
+    {
+        scene->addLine(CORNER_OFFSET/2, y, 3*CORNER_OFFSET/2, y, *outlinePen);
+    }
 }
 
 void BrauerDemo::drawCassOvals()
 {
 
 }
-
 
