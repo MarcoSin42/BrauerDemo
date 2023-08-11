@@ -22,7 +22,6 @@ private:
     Ui::BrauerDemo *ui;
     void drawCircle(int x, int y, int r);
     void drawCassOvals();
-    double real_root(double t, double a, double K);
 
 };
 #endif // BRAUERDEMO_H

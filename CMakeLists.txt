@@ -12,11 +12,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+find_package(Armadillo REQUIRED)
+include_directories(${ARMADILLO_INCLUDE_DIRS})
+
 set(PROJECT_SOURCES
         main.cpp
         brauerdemo.cpp
         brauerdemo.h
         brauerdemo.ui
+        math_utils.cpp
+        math_utils.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -38,11 +43,13 @@ else()
     else()
         add_executable(BrauerDemo
             ${PROJECT_SOURCES}
+            math_utils.cpp
+            math_utils.h
         )
     endif()
 endif()
 
-target_link_libraries(BrauerDemo PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(BrauerDemo PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
 
 set_target_properties(BrauerDemo PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
