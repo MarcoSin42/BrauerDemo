@@ -56,6 +56,7 @@ void BrauerDemo::update()
     scene->setSceneRect(ui->graphView->sceneRect());
     w = ui->graphView->width();
     h = ui->graphView->height();
+
     qDebug("I've been resized! w: %d | h: %d asdas", w, h);
     //drawCircle(0, 0, 50);
     drawAxis();
@@ -73,17 +74,17 @@ void BrauerDemo::drawAxis()
 {
     vec y_axis = linspace(CORNER_OFFSET,h,10);
     vec x_axis = linspace(CORNER_OFFSET,w,10);
+    int x,y;
 
     scene->addLine(0, CORNER_OFFSET, w, CORNER_OFFSET, *outlinePen);
     scene->addLine(CORNER_OFFSET, 0, CORNER_OFFSET, h, *outlinePen);
 
-    for (auto x: x_axis)
+    for (int i = 0; i < y_axis.size(); ++i)
     {
-        scene->addLine(x, CORNER_OFFSET/2, x, 3*CORNER_OFFSET/2, *outlinePen);
-    }
+        x = x_axis[i];
+        y = y_axis[i];
 
-    for(auto y: y_axis)
-    {
+        scene->addLine(x, CORNER_OFFSET/2, x, 3*CORNER_OFFSET/2, *outlinePen);
         scene->addLine(CORNER_OFFSET/2, y, 3*CORNER_OFFSET/2, y, *outlinePen);
     }
 }
