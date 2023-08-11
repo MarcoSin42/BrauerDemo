@@ -3,7 +3,9 @@ Demonstration of Brauer's oval of Cassini, an eigenvalue estimation heuristic.  
 
 
 
+# Building from Source
 
-# Requirements to build
+Install dependencies:
+  - [Armadillo](https://arma.sourceforge.net/)
 
-In order to build this project, [Armadillo](https://arma.sourceforge.net/) is a pre-requisite.   
+Next, use QTCreator and open the project and simply build or run.  Note, that I have only built this project on Linux.
