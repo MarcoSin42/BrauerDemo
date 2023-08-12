@@ -25,19 +25,19 @@ cx_vec get_roots(vector<double> coeffs)
     cx_mat comp_mat = cx_mat(n,n, fill::zeros);
     for (int i = 1; i < n; ++i) {
         comp_mat(i, i - 1) = 1;
+
+        // Fill the right-side with the coefficients
+        comp_mat(i - 1, n - 1) = -coeffs[i - 1];
     }
 
-    // Fill the right-side with the coefficients
-    for (int i = 0; i < n; ++i) {
-        comp_mat(i, n - 1) = -coeffs[i];
-    }
+    comp_mat.print();
 
-    //comp_mat.print();
-
+    // Compute the roots via eigenvalue solver
     eig_gen(results, comp_mat);
 
     return results;
 }
+
 /**
 int main()
 {
