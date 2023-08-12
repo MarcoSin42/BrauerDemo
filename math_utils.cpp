@@ -30,7 +30,7 @@ cx_vec get_roots(vector<double> coeffs)
         comp_mat(i - 1, n - 1) = -coeffs[i - 1];
     }
 
-    comp_mat.print();
+    //comp_mat.print();
 
     // Compute the roots via eigenvalue solver
     eig_gen(results, comp_mat);
