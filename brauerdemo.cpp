@@ -1,6 +1,7 @@
 #include "brauerdemo.h"
 #include "./ui_brauerdemo.h"
 #include "math_utils.h"
+#include <QStringBuilder>
 
 const int CORNER_OFFSET = 50;
 
@@ -23,8 +24,6 @@ BrauerDemo::BrauerDemo(QWidget *parent)
 
     outlinePen->setWidth(2);
 
-    //drawCircle(100,100, 40);
-    //drawAxis();
 
 }
 
@@ -58,7 +57,6 @@ void BrauerDemo::update()
     h = ui->graphView->height();
 
     qDebug("I've been resized! w: %d | h: %d asdas", w, h);
-    //drawCircle(0, 0, 50);
     drawAxis();
 }
 
@@ -72,11 +70,11 @@ void BrauerDemo::resizeEvent(QResizeEvent *event)
  */
 void BrauerDemo::drawAxis()
 {
-    vec y_axis = linspace(CORNER_OFFSET,h,10);
+    vec y_axis = linspace(h - CORNER_OFFSET,0,10);
     vec x_axis = linspace(CORNER_OFFSET,w,10);
     int x,y;
 
-    scene->addLine(0, CORNER_OFFSET, w, CORNER_OFFSET, *outlinePen);
+    scene->addLine(0, h - CORNER_OFFSET, w, h - CORNER_OFFSET, *outlinePen);
     scene->addLine(CORNER_OFFSET, 0, CORNER_OFFSET, h, *outlinePen);
 
     for (int i = 0; i < y_axis.size(); ++i)
@@ -84,8 +82,9 @@ void BrauerDemo::drawAxis()
         x = x_axis[i];
         y = y_axis[i];
 
-        scene->addLine(x, CORNER_OFFSET/2, x, 3*CORNER_OFFSET/2, *outlinePen);
+        scene->addLine(x, h - CORNER_OFFSET/2, x, h - 3*CORNER_OFFSET/2, *outlinePen);
         scene->addLine(CORNER_OFFSET/2, y, 3*CORNER_OFFSET/2, y, *outlinePen);
+
     }
 }
 
