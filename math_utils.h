@@ -1,4 +1,7 @@
 #include <armadillo>
+#include <QPolygon>
+#include <complex>
+
 using namespace std;
 using namespace arma;
 
@@ -7,4 +10,7 @@ using namespace arma;
 
 
 cx_vec get_roots(vector<double>);
+
+QPolygon *get_brauer(complex<double>, complex<double>);
+cx_vec off_diag_sum(cx_mat);
 #endif // MATH_UTILS_H
