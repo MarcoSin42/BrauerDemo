@@ -15,11 +15,6 @@ cx_vec get_roots(vector<double> coeffs)
     cx_vec results;
     int n = coeffs.size() - 1;
 
-    // Normalize all the coefficients
-    for (int i = 0; i < n; i++)
-    {
-        coeffs[i] = coeffs[i] / coeffs[coeffs.size() - 1];
-    }
 
     // Construct the companion matrix
     cx_mat comp_mat = cx_mat(n,n, fill::zeros);
@@ -27,7 +22,7 @@ cx_vec get_roots(vector<double> coeffs)
         comp_mat(i, i - 1) = 1;
 
         // Fill the right-side with the coefficients
-        comp_mat(i - 1, n - 1) = -coeffs[i - 1];
+        comp_mat(i - 1, n - 1) = -coeffs[i - 1] / coeffs[coeffs.size() - 1]; // Normalize coefficients
     }
 
     //comp_mat.print();
