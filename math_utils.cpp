@@ -1,5 +1,6 @@
 #include "math_utils.h"
 #include <iostream>
+#include <random>
 /**
  * @brief get_roots: Given a set of coefficient representing the coefficient of a polynomial going
  * smallest degree to greatest degree, solve for the roots of the equation
@@ -68,12 +69,41 @@ cx_vec off_diag_sum(cx_mat A)
 }
 
 /**
+ * @brief gen_rand_cxmat Generates a random complex-valued matrix
+ * @param n The nxn dimension
+ * @return A random complex-valued matrix with eigenvalues bounded within 10 units of the origin
+ */
+cx_mat rand_cxmat(int n)
+{
+    cx_mat result = cx_mat(n,n, fill::zeros);
+    default_random_engine generator;
+
+    // Want:  eigenvalues of the matrix bounded within 10 units of the origin, i.e. |lambda| <= 10
+    // Given: n = number of elements in a row
+
+    // use simple geometry lambda = a + bi, |lambda| = sqrt(a^2 + b^2)
+    // assume a = b
+    // |lambda| = sqrt(2*a^2)
+    // Thus, |lambda| = sqrt(2*a^2) <= 10 => a,b < 10 / sqrt(2)
+    // Remember we have n elements, therefore the real and imaginary component of each element of the matrix must be < 10/sqrt(2)/n
+    // in order to satisfy |lambda| <= 10
+    std::uniform_real_distribution<double> distribution(-10/n/sqrt(2), 10/n/sqrt(2));
+
+    for (int row = 0; row < result.n_rows; ++row) {
+        for (int col = 0; col < result.n_cols; ++col) {
+            result(row, col) = cx_double(distribution(generator), distribution(generator));
+        }
+    }
+
+    return result;
+}
+/**
 int main()
 {
     vector<double> a = {1, 0, 1};
     cx_vec roots;
 
-    cout << "a:";
+    cout << "a:";0.0
     for (const auto i: a) {
         cout << i << ", ";
     }

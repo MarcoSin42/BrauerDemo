@@ -13,4 +13,6 @@ cx_vec get_roots(vector<double>);
 
 QPolygon *get_brauer(complex<double>, complex<double>);
 cx_vec off_diag_sum(cx_mat);
+cx_mat rand_cxmat(int);
+
 #endif // MATH_UTILS_H

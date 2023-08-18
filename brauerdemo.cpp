@@ -7,6 +7,7 @@
 
 const int CORNER_OFFSET = 50;
 const int N_TICKS = 20;
+
 BrauerDemo::BrauerDemo(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::BrauerDemo)
@@ -43,6 +44,8 @@ BrauerDemo::~BrauerDemo()
  */
 void BrauerDemo::drawCircle(int x, int y, int r)
 {
+    cx_mat a = rand_cxmat(5);
+    cx_vec radii = off_diag_sum(a);
     // qDebug("w: %d | h: %d asdas", w, h);
     scene->addEllipse(x, y, r, r, *outlinePen, Qt::green);
 }
