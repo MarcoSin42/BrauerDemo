@@ -2,15 +2,18 @@
 #include "./ui_brauerdemo.h"
 #include "math_utils.h"
 #include <QStringBuilder>
+#include <QGraphicsItem>
+#include <QPainter>
 
 const int CORNER_OFFSET = 50;
-
+const int N_TICKS = 20;
 BrauerDemo::BrauerDemo(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::BrauerDemo)
 {
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
+
     outlinePen = new QPen(Qt::black);
 
     // This part below drove me insane trying to get this behaviour.
@@ -70,22 +73,45 @@ void BrauerDemo::resizeEvent(QResizeEvent *event)
  */
 void BrauerDemo::drawAxis()
 {
-    vec y_axis = linspace(h - CORNER_OFFSET,0,10);
-    vec x_axis = linspace(CORNER_OFFSET,w,10);
+    vec y_axis = linspace(h - CORNER_OFFSET,0 + 40,N_TICKS+1);
+    vec x_axis = linspace(CORNER_OFFSET    ,w - 40,N_TICKS+1);
+
+    vec t_marks = linspace(-N_TICKS / 2   , N_TICKS / 2, N_TICKS + 1);
+
     int x,y;
+    // Move X-axis tick marks up
+    // Move Y-axis tick marks to the left
+    scene->addLine(CORNER_OFFSET, h - CORNER_OFFSET, w, h - CORNER_OFFSET, *outlinePen); // X Axis
+    scene->addLine(CORNER_OFFSET, 0, CORNER_OFFSET, h - CORNER_OFFSET, *outlinePen); // Y Axis
 
-    scene->addLine(0, h - CORNER_OFFSET, w, h - CORNER_OFFSET, *outlinePen);
-    scene->addLine(CORNER_OFFSET, 0, CORNER_OFFSET, h, *outlinePen);
-
+    QGraphicsTextItem *text;
     for (int i = 0; i < y_axis.size(); ++i)
     {
         x = x_axis[i];
         y = y_axis[i];
+        if (i != 0) {
+            scene->addLine(x, h - CORNER_OFFSET - CORNER_OFFSET/4, x, h - CORNER_OFFSET + CORNER_OFFSET/4, *outlinePen);
+            scene->addLine(CORNER_OFFSET - CORNER_OFFSET/4, y, CORNER_OFFSET + CORNER_OFFSET/4, y, *outlinePen);
+        }
 
-        scene->addLine(x, h - CORNER_OFFSET/2, x, h - 3*CORNER_OFFSET/2, *outlinePen);
-        scene->addLine(CORNER_OFFSET/2, y, 3*CORNER_OFFSET/2, y, *outlinePen);
+        // Drawing demarkations on the x axis
+        text = new QGraphicsTextItem;
+        text->setPos(x - 10, h - CORNER_OFFSET + 15);
+        text->setPlainText(QString::number(t_marks[i]));
+        text->setDefaultTextColor(Qt::black);
+
+        scene->addItem(text);
+
+        // Drawing demarkations  on the y axis
+        text = new QGraphicsTextItem;
+        text->setPos(CORNER_OFFSET/2 - 15, y - 15);
+        text->setPlainText(QString::number(t_marks[i]));
+        text->setDefaultTextColor(Qt::black);
+
+        scene->addItem(text);
 
     }
+
 }
 
 void BrauerDemo::drawCassOvals()
