@@ -97,6 +97,23 @@ cx_mat rand_cxmat(int n)
 
     return result;
 }
+
+///
+/// \brief linmap Linear interpolation function
+/// \param dlow lower bound of the domain
+/// \param dup upper bound of the domain
+/// \param rlow lower bound of the range
+/// \param rup upper bound of the range
+/// \param t the thing we want to linearly interpolate
+/// \return the linearly interpolated result
+///
+double linmap(double dlow, double dup, double rlow, double rup, double t)
+{
+    return dlow + (t / (dup - dlow))*(rup - dlow);
+}
+
+
+
 /**
 int main()
 {
